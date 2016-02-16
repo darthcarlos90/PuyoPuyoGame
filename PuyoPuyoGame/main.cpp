@@ -55,7 +55,6 @@ int main(){
 		
 	}
 	system("pause");*/
-	
 	Gamelogic logic;
 	logic.Start();
 

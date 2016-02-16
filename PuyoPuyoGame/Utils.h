@@ -15,23 +15,47 @@
 #define X_START 0
 #define Y_START 3
 
-struct Piece {
-	Location location;
-	// Old locations used for erasing purposes in the game board
-	Location old_location;
-	char value;
 
-
-};
 
 //To simplify stuff, we are having a location struct
 struct Location{
 	int x;
 	int y;
 
+
+	// Default constructor
+	Location(){
+		x = -1;
+		y = -1;
+	}
+
 	// Assigment operator, just in case
 	Location& operator = (const Location& l){
 		x = l.x;
 		y = l.y;
+
+		return *this;
 	}
+};
+
+struct Piece {
+	//Copy constructor just in case
+	Piece(const Piece& p){
+		this->location = p.location;
+		this->old_location = p.old_location;
+		this->value = p.value;
+	}
+	//Default constructor
+	Piece(){
+		location.x = 0;
+		location.y = 0;
+		old_location.x = 0;
+		old_location.y = 0;
+	}
+	Location location;
+	// Old locations used for erasing purposes in the game board
+	Location old_location;
+	char value;
+
+
 };

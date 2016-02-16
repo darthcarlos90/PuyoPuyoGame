@@ -12,10 +12,14 @@ public:
 	~Gameboard(); // Destructs the gameboard
 
 	void PrintBoard();
+	void SetValue(Location l, char value); 
+	void SetMoving(char value, Location l, Location old_l = Location()); // Old location is an optional parameter
+	bool CanMove(Location l); // See if the piece at location l can muve further
 
 
 private:
 	Matrix<char>* board;
+	
 	
 
 };

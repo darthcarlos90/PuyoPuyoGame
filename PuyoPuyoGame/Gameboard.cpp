@@ -17,3 +17,15 @@ Gameboard::~Gameboard(){
 void Gameboard::PrintBoard(){
 	cout << *board << endl;
 }
+
+void Gameboard::SetValue(Location l, char value){
+	board->set_element(l.x, l.y, value);
+}
+
+void Gameboard::SetMoving(char value, Location l, Location old_l){
+	if (old_l.x != -1){ // if there is an old_x
+		SetValue(old_l, ' '); // set empty
+	}
+
+	SetValue(l, value); // Re-use ;)
+}

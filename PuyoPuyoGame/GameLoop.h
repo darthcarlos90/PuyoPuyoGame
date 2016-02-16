@@ -6,6 +6,8 @@
 */
 #pragma once
 #include "Matrix.h"
+#include "GameBoard.h"
+#include "Pair.h"
 
 
 class GameLoop{
@@ -14,9 +16,11 @@ public:
 	~GameLoop(void);
 
 	void Start(void); 
-	void UpdateGame(float msec); // Game update method
+	// Temporary fix
+	void UpdateGame(float msec = 0.0f); // Game update method
 
 	// as coding goes on try adding more and more methods
+	bool getPlayerLost() { return player_lost; }
 
 private:
 	void PrintElements();
@@ -28,4 +32,10 @@ private:
 
 	// These variables are used to save where the 
 	bool falling; // flag to detect if a piece is still falling
+
+	Gameboard gameboard;
+	Pair* pair; //This pair will be recycled for the upcoming pairs
+
+
+
 };

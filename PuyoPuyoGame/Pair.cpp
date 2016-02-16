@@ -12,6 +12,12 @@ Pair::Pair(char val1, char val2){
 	moving = true;
 }
 
+Pair::Pair(const Pair& p){
+	this->p1 = p.p1;
+	this->p2 = p.p2;
+	this->moving = p.moving;
+}
+
 Pair::~Pair(){
 	// Empty destructor for now
 }
@@ -76,4 +82,12 @@ void Pair::Move(int direction){
 		}
 		break;
 	}
+}
+
+
+Location Pair::getLowest(){
+	// If they are the same level, return the location of the pivot
+	if (p1.location.x == p2.location.x) return p2.location;
+	if (p1.location.x < p2.location.x) return p2.location;
+	if (p1.location.x > p2.location.x) return p1.location;
 }

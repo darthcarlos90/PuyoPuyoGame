@@ -7,6 +7,7 @@
 class Pair{
 public:
 	Pair(char val1, char val2);
+	Pair(const Pair& p); // copy constructor
 	~Pair();
 
 	void Shift();
@@ -14,6 +15,7 @@ public:
 	Piece getP1() { return p1; }
 	Piece getPivot() { return p2; }
 	void Stop() { moving = false; }
+	Location getLowest(); // Gets the location of the element closest to the bottom.
 
 private:
 
