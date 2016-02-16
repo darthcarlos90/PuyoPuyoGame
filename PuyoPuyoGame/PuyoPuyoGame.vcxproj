@@ -79,13 +79,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Gamelogic.cpp" />
+    <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Downloads\Matrix.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

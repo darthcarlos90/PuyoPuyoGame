@@ -4,6 +4,7 @@
 
 #pragma once
 #include "Menu.h"
+#include "GameLoop.h"
 
 class Gamelogic {
 public:
@@ -14,5 +15,6 @@ public:
 
 private:
 	Menu menu;
+	GameLoop loop;
 
 };

@@ -4,5 +4,23 @@
 	any time I need something.
 
 */
+#pragma once
+#include "Matrix.h"
 
-//TODO: Left here, went for dinner
+
+class GameLoop{
+public:
+	GameLoop(void);
+	~GameLoop(void);
+
+	void Start(void);
+
+	// as coding goes on try adding more and more methods
+
+private:
+	void PrintElements();
+	// start adding properties
+	Matrix<char>* gameboard; // pointer to the matrix
+	unsigned int score;
+	bool player_lost;
+};

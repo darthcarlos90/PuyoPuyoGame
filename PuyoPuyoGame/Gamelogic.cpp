@@ -14,5 +14,8 @@ void Gamelogic::Start(){
 	menu.Start();
 	if (menu.GameStarted()){
 		// Lets start the game logic
+		loop.Start();
 	}
+
+	system("pause");
 }
