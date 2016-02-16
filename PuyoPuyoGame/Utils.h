@@ -22,6 +22,11 @@ struct Location{
 	int x;
 	int y;
 
+	//Constructor
+	Location(int x, int y){
+		this->x = x;
+		this->y = y;
+	}
 
 	// Default constructor
 	Location(){
@@ -49,8 +54,8 @@ struct Piece {
 	Piece(){
 		location.x = 0;
 		location.y = 0;
-		old_location.x = 0;
-		old_location.y = 0;
+		old_location.x = -1;
+		old_location.y = -1;
 	}
 	Location location;
 	// Old locations used for erasing purposes in the game board

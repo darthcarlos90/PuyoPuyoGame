@@ -1,6 +1,7 @@
 #include "GameLoop.h"
 #include <stdlib.h>
 #include <string>
+#include <Windows.h>
 
 
 
@@ -41,16 +42,49 @@ void GameLoop::UpdateGame(float msec){
 		std::string value2 = std::to_string(rand() % 4 + 1);
 
 		pair = new Pair(value1[0], value2[0]);
-		gameboard.SetMoving(pair->getP1().value, pair->getP1().location);
-		gameboard.SetMoving(pair->getPivot().value, pair->getPivot().location);
-		falling = true;
-		PrintElements();
+		if (gameboard.isOccuppied(pair->getP1().location) || gameboard.isOccuppied(pair->getPivot().location)){
+			player_lost = true;
+		}
+		else {
+			gameboard.SetMoving(pair->getP1().value, pair->getP1().location);
+			gameboard.SetMoving(pair->getPivot().value, pair->getPivot().location);
+			falling = true;
+			PrintElements();
+		}
+		
 	}
 	else {// If the piece is falling, lets move it a step downward
-		// First, can the piece move?
+		// First, is there any input from the user?
+		//TODO: If time, create a function out of the stuff below
+		if (GetAsyncKeyState(VK_LEFT)){ // If left was pressed
+			if (gameboard.canMove(pair->getP1().location, LEFT) && gameboard.canMove(pair->getPivot().location, LEFT)){
+				pair->Move(LEFT);
+				//TODO: Left here, add the setmoving to all this methods so that the board can get updated
+			}
+		}
+		else if (GetAsyncKeyState(VK_RIGHT)){ // If right was pressed
+			if (gameboard.canMove(pair->getP1().location, RIGHT) && gameboard.canMove(pair->getPivot().location, RIGHT)){
+				pair->Move(RIGHT);
+			}
+		}
+		else if (GetAsyncKeyState(VK_DOWN)){// If down was pressed
+			if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
+				pair->Move(DOWN);
+		}
+		//Now see if you can move further down
+		if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
+			pair->Move(DOWN);
+		}
+		else {
+			//If not, make the pair static
+			gameboard.SetValue(pair->getP1().location, pair->getP1().value);
+			gameboard.SetValue(pair->getPivot().location, pair->getPivot().value);
+			pair = NULL; // delete the pair to create a new one
+		}
+		
 
 	}
 
-	player_lost = true;
+	
 
 }

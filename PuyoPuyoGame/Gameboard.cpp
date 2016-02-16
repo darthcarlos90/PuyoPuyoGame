@@ -29,3 +29,31 @@ void Gameboard::SetMoving(char value, Location l, Location old_l){
 
 	SetValue(l, value); // Re-use ;)
 }
+
+bool Gameboard::isOccuppied(Location l){
+	// So it cant go out of the borders
+	if (l.x >= board->get_x_size()) return false;
+	else if (l.y >= board->get_y_size()) return false;
+
+	// Now if the location is inside the borders, see if it is occuppied
+	char value = board->get_element(l.x, l.y);
+	if (value == ' '){
+		return false;
+	}
+	else return true;
+}
+
+
+bool Gameboard::canMove(Location from, int direction){
+	switch (direction){
+	case DOWN:
+		return isOccuppied(Location(from.x + 1, from.y));
+		break;
+	case LEFT:
+		return isOccuppied(Location(from.x, from.y - 1));
+		break;
+	case RIGHT:
+		return isOccuppied(Location(from.x, from.y + 1));
+		break;
+	}
+}

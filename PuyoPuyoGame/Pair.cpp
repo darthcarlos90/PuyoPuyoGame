@@ -91,3 +91,4 @@ Location Pair::getLowest(){
 	if (p1.location.x < p2.location.x) return p2.location;
 	if (p1.location.x > p2.location.x) return p1.location;
 }
+
