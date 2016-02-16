@@ -13,14 +13,19 @@ public:
 	GameLoop(void);
 	~GameLoop(void);
 
-	void Start(void);
+	void Start(void); 
+	void UpdateGame(float msec); // Game update method
 
 	// as coding goes on try adding more and more methods
 
 private:
 	void PrintElements();
-	// start adding properties
-	Matrix<char>* gameboard; // pointer to the matrix
+
+
 	unsigned int score;
 	bool player_lost;
+
+
+	// These variables are used to save where the 
+	bool falling; // flag to detect if a piece is still falling
 };
