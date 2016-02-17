@@ -23,14 +23,18 @@ public:
 
 	// as coding goes on try adding more and more methods
 	bool getPlayerLost() { return player_lost; }
+	void PrintElements();
 
 private:
-	void PrintElements();
+	
 	void DeletePair();
 
 
 	unsigned int score;
+	unsigned int frames; // for debugging purposes
+	float frames_p_sec;
 	bool player_lost;
+	float game_timer;
 
 
 	// These variables are used to save where the 

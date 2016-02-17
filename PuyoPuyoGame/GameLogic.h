@@ -5,6 +5,7 @@
 #pragma once
 #include "Menu.h"
 #include "GameLoop.h"
+#include "GameTimer.h"
 
 class Gamelogic {
 public:

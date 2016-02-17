@@ -14,9 +14,12 @@ void Gamelogic::Start(){
 	menu.Start();
 	if (menu.GameStarted()){
 		// Lets start the game logic
+		GameTimer timer;
 		loop.Start();
 		while (!loop.getPlayerLost()){
-			loop.UpdateGame();
+			float msec = timer.GetTimedMS();
+			loop.UpdateGame(msec);
+			loop.PrintElements(); // Separate game logic from "rendering" if it can be called that way
 		}
 	}
 

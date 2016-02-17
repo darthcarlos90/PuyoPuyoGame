@@ -81,6 +81,7 @@
     <ClCompile Include="Gameboard.cpp" />
     <ClCompile Include="Gamelogic.cpp" />
     <ClCompile Include="GameLoop.cpp" />
+    <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Pair.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="GameLoop.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pair.h" />

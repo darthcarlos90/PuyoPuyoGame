@@ -124,14 +124,14 @@ Matrix<T>& Matrix<T>::operator=(const Matrix<T>& rhs){
 template <typename E>
 ostream& operator<< (ostream& ostr, const Matrix<E>& mtx){
 	for (int i = 0; i < mtx.x_size; i++){
-		ostr << "|";
+		//ostr << "|";
 		for (int j = 0; j < mtx.y_size; j++){
 			ostr << mtx.cells[i][j];
 			if (j != mtx.y_size - 1){
 				ostr << " ";
 			}
 		}
-		ostr << "|\n";
+		ostr << "\n";
 	}
 	//ostr << "\n";
 
