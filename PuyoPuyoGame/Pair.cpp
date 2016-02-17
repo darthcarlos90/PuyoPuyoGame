@@ -85,10 +85,52 @@ void Pair::Move(int direction){
 }
 
 
-Location Pair::getLowest(){
-	// If they are the same level, return the location of the pivot
-	if (p1.location.x == p2.location.x) return p2.location;
-	if (p1.location.x < p2.location.x) return p2.location;
-	if (p1.location.x > p2.location.x) return p1.location;
+Piece Pair::getLowest(bool* both){
+	if (p1.location.x == p2.location.x){
+		*both = true;
+		return p2;
+	}
+		
+	if (p1.location.x < p2.location.x){
+		*both = false;
+		return p2;
+	}
+	if (p1.location.x > p2.location.x) {
+		*both = false;
+		return p1;
+	}
 }
 
+Piece Pair::getLeftMost(bool* both){
+	if (p1.location.y == p2.location.y){
+		*both = true;
+		return p2;
+	}
+
+	if (p1.location.y < p2.location.y){
+		*both = false;
+		return p1;
+	}
+
+	if (p1.location.y > p2.location.y){
+		*both = false;
+		return p2;
+	}
+}
+
+Piece Pair::getRightMost(bool* both){
+	if (p1.location.y == p2.location.y){
+		*both = true;
+		return p2;
+	}
+
+	if (p1.location.y < p2.location.y){
+		*both = false;
+		return p2;
+	}
+
+	if (p1.location.y > p2.location.y){
+		*both = false;
+		return p1;
+	}
+}

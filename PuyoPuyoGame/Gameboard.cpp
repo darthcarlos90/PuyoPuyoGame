@@ -32,8 +32,9 @@ void Gameboard::MovePiece(char value, Location l, Location old_l){
 
 bool Gameboard::isOccuppied(Location l){
 	// So it cant go out of the borders
-	if (l.x >= board->get_x_size()) return false;
-	else if (l.y >= board->get_y_size()) return false;
+	if (l.x >= board->get_x_size()) return true;
+	else if (l.y >= board->get_y_size()) return true;
+	else if (l.y < 0) return true;
 
 	// Now if the location is inside the borders, see if it is occuppied
 	char value = board->get_element(l.x, l.y);

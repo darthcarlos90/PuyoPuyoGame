@@ -56,39 +56,95 @@ void GameLoop::UpdateGame(float msec){
 	else {// If the piece is falling, lets move it a step downward
 		// First, is there any input from the user?
 		//TODO: If time, create a function out of the stuff below
-		if (GetAsyncKeyState(VK_LEFT)){ // If left was pressed
-			if (gameboard.canMove(pair->getP1().location, LEFT) && gameboard.canMove(pair->getPivot().location, LEFT)){
-				pair->Move(LEFT);
-				gameboard.MovePair(*pair);
-
+		bool both = false;
+		if (GetAsyncKeyState(0x53)){
+			pair->Shift();
+			gameboard.MovePair(*pair);
+		}
+		else if (GetAsyncKeyState(VK_LEFT)){ // If left was pressed
+			Piece p = pair->getLeftMost(&both);
+			if (both){
+				if (gameboard.canMove(pair->getP1().location, LEFT) && gameboard.canMove(pair->getPivot().location, LEFT)){
+					pair->Move(LEFT);
+					gameboard.MovePair(*pair);
+				}
+				
+			}
+			else {
+				if (gameboard.canMove(p.location, LEFT)){
+					pair->Move(LEFT);
+					gameboard.MovePair(*pair);
+				}
 			}
 		}
 		else if (GetAsyncKeyState(VK_RIGHT)){ // If right was pressed
-			if (gameboard.canMove(pair->getP1().location, RIGHT) && gameboard.canMove(pair->getPivot().location, RIGHT)){
-				pair->Move(RIGHT);
-				gameboard.MovePair(*pair);
+			Piece p = pair->getRightMost(&both);
+			if (both){
+				if (gameboard.canMove(pair->getP1().location, RIGHT) && gameboard.canMove(pair->getPivot().location, RIGHT)){
+					pair->Move(RIGHT);
+					gameboard.MovePair(*pair);
+				}
 			}
+			else {
+				if (gameboard.canMove(p.location, RIGHT)){
+					pair->Move(RIGHT);
+					gameboard.MovePair(*pair);
+				}
+			}
+			
 		}
 		else if (GetAsyncKeyState(VK_DOWN)){// If down was pressed
-			if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
-				pair->Move(DOWN);
-				gameboard.MovePair(*pair);
+			Piece p = pair->getLowest(&both);
+			if (both){
+				if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
+					pair->Move(DOWN);
+					gameboard.MovePair(*pair);
+				}
+				
 			}
+			else {
+				if (gameboard.canMove(p.location, DOWN)){
+					pair->Move(DOWN);
+					gameboard.MovePair(*pair);
+				}
+			}
+			
 
 		}
 
 		//Now see if you can move further down
-		if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
-			pair->Move(DOWN);
-			gameboard.MovePair(*pair);
+		Piece p = pair->getLowest(&both);
+		if (both){
+			
+			if (gameboard.canMove(pair->getP1().location, DOWN) && gameboard.canMove(pair->getPivot().location, DOWN)){
+				pair->Move(DOWN);
+				gameboard.MovePair(*pair);
+			}
+			else {
+				//If not, make the pair static
+				gameboard.SetValue(pair->getP1().location, pair->getP1().value);
+				gameboard.SetValue(pair->getPivot().location, pair->getPivot().value);
+				DeletePair(); // delete the pair to create a new one
+				falling = false;
+
+			}
 		}
 		else {
-			//If not, make the pair static
-			gameboard.SetValue(pair->getP1().location, pair->getP1().value);
-			gameboard.SetValue(pair->getPivot().location, pair->getPivot().value);
-			DeletePair(); // delete the pair to create a new one
+			
+			if (gameboard.canMove(p.location, DOWN)){
+				pair->Move(DOWN);
+				gameboard.MovePair(*pair);
+			}
+			else {
+				//If not, make the pair static
+				gameboard.SetValue(pair->getP1().location, pair->getP1().value);
+				gameboard.SetValue(pair->getPivot().location, pair->getPivot().value);
+				DeletePair(); // delete the pair to create a new one
+				falling = false;
 
+			}
 		}
+		
 
 	}
 

@@ -15,7 +15,10 @@ public:
 	Piece getP1() { return p1; }
 	Piece getPivot() { return p2; }
 	void Stop() { moving = false; }
-	Location getLowest(); // Gets the location of the element closest to the bottom.
+	Piece getLowest(bool* both); // Gets the location of the element closest to the bottom.
+	Piece getLeftMost(bool * both);
+	Piece getRightMost(bool* both);
+	
 	
 
 private:
