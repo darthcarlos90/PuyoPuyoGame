@@ -10,6 +10,7 @@ Pair::Pair(char val1, char val2){
 	p2.value = val2;
 
 	moving = true;
+	state = P_LEFT;
 }
 
 Pair::Pair(const Pair& p){
@@ -24,33 +25,45 @@ Pair::~Pair(){
 
 void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 	// p2 is the pivot, p1 moves
-	if (p1.location.y < p2.location.y && p1.location.x < X_SIZE){
-		// if p1 is at the left of p2
-		// AND it can be shifted
-		p1.old_location = p1.location;
-		p1.location.x++;
-		p1.location.y++;
+	switch (state){
+	case P_LEFT:
+		if (p1.location.x < X_SIZE){
+			// if p1 is at the left of p2
+			// AND it can be shifted
+			p1.old_location = p1.location;
+			p1.location.x++;
+			p1.location.y++;
+			state = P_DOWN;
+		}
+		break;
+	case P_DOWN:
+		if (p1.location.y < Y_SIZE){
+			// If p1 is below p2, and it can be shifted
+			p1.old_location = p1.location;
+			p1.location.x--;
+			p1.location.y++;
+			state = P_RIGHT;
+		}
+		break;
+	case P_RIGHT:
+		if (p1.location.x > 0){
+			// If p1 is to the right of p2, and it can be shifted
+			p1.old_location = p1.location;
+			p1.location.x--;
+			p1.location.y--;
+			state = P_UP;
+		}
+		break;
+	case P_UP:
+		if (p1.location.x < p2.location.x && p1.location.y > 0){
+			// If p1 is above p2 and can be shifted
+			p1.old_location = p1.location;
+			p1.location.x++;
+			p2.location.y--;
+			state = P_RIGHT;
+		}
+		break;
 	}
-	else if (p1.location.x > p2.location.x && p1.location.y < Y_SIZE){
-		// If p1 is below p2, and it can be shifted
-		p1.old_location = p1.location;
-		p1.location.x--;
-		p1.location.y++;
-	}
-	else if (p1.location.y > p2.location.y && p1.location.x > 0){
-		// If p1 is to the right of p2, and it can be shifted
-		p1.old_location = p1.location;
-		p1.location.x--;
-		p1.location.y--;
-	}
-	else if (p1.location.x < p2.location.x && p1.location.y > 0){
-		// If p1 is above p2 and can be shifted
-		p1.old_location = p1.location;
-		p1.location.x++;
-		p2.location.y--;
-	}
-
-
 }
 
 

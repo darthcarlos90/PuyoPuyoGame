@@ -33,6 +33,7 @@ void GameLoop::PrintElements(){
 	//cout << "Frames: " << frames << endl;
 	//cout << "Frames per second: " << frames_p_sec << endl;
 	gameboard.PrintBoard();
+	score += gameboard.CheckPoints();
 }
 
 // The msec input refers to how many miliseconds have passed since the last frame

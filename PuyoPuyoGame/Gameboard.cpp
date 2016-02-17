@@ -81,11 +81,42 @@ void Gameboard::SetStaticPair(Pair p){
 }
 
 int Gameboard::CheckPoints(){
-
+	int points = 0;
+	if (static_pieces.size() >= 4){
+		for (unsigned int i = 0; i < static_pieces.size(); i++){
+			int pointsFromPiece = CalculatePoints(static_pieces[i].location, static_pieces[i].value);
+			if (pointsFromPiece > 0) i--; // so that this step is repeated, since the element has been deleted from the list
+			points += pointsFromPiece;
+		}
+	}
+	
+	return points;
+	
 }
 
 int Gameboard::CalculatePoints(Location l, char value){
 	int points = 0;
+	// Get how many contiguous elements are with this element
+	int contiguous = TrackAdjacents(l, value);
+	if (contiguous >= 4){
+		// If there are 4 contiguous elements, it means some elements where removed from the board
+		// First calculate the points
+		int difference = contiguous - 4;
+		points = 40 + (difference * 20);
+
+
+		// Then, move elements down (if available)
+		for (unsigned int i = 0; i < static_pieces.size(); i++){
+			if (canMove(static_pieces[i].location, DOWN)){
+				Location oldLoc = static_pieces[i].location;
+				Location newLoc(oldLoc.x + 1, oldLoc.y);
+				MovePiece(static_pieces[i].value, newLoc, oldLoc);
+				static_pieces[i].location = newLoc;
+				static_pieces[i].old_location = oldLoc;
+			}
+		}
+
+	}
 	return points;
 }
 
@@ -102,14 +133,13 @@ int Gameboard::TrackAdjacents(Location l, char value){
 		if(temp.size() > 0) adjacents.insert(adjacents.end(), temp.begin(), temp.end()); //insert at the end of the vector
 	}
 
-	// If there are more than 4 elements, destroy them from the board
-	if (adjacents.size() > 4){
+	// If there are more than 4 elements, destroy them from the board and remove them from the vector
+	if (adjacents.size() >= 4){
 		for (unsigned int i = 0; i < adjacents.size(); i++){
-			board->set_element(adjacents[i].x, adjacents[i].y, ' '); // TODO: Left here
-
+			board->set_element(adjacents[i].x, adjacents[i].y, ' ');
+			DeleteLocation(adjacents[i]);
 		}
 	}
-
 
 	return adjacents.size();
 
@@ -177,4 +207,18 @@ vector<Location> Gameboard::AdjacentSimilar(Location l, char value, vector<Locat
 
 	return result;
 	
+}
+
+/* Helper method to delete locations from the static_pieces vector */
+void Gameboard::DeleteLocation(Location l){
+	int index = -1;
+	for (unsigned int i = 0; i < static_pieces.size(); i++){
+		if (static_pieces[i].location == l){
+			index = i;
+			break;
+		}
+	}
+	if (index == -1)
+		cout << "Holis" << endl;
+	static_pieces.erase(static_pieces.begin() + index);
 }

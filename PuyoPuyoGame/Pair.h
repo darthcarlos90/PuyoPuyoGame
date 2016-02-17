@@ -28,5 +28,7 @@ private:
 
 	bool moving; // flag to detect if this pair is moving
 
+	int state;
+
 	
 };

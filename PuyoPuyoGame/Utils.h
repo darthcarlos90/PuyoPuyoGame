@@ -9,6 +9,12 @@
 	DOWN, LEFT, RIGHT
 };
 
+ /* This enum will be used to save the state of one of the pieces in respect to the pivot
+  in the Pair class. */
+ enum Piece_State{
+	 P_LEFT, P_RIGHT, P_DOWN, P_UP
+ };
+
  // This constants will be used through the game
 #define X_SIZE 12
 #define Y_SIZE 6
@@ -40,6 +46,11 @@ struct Location{
 		y = l.y;
 
 		return *this;
+	}
+
+	// Equals operator
+	bool operator == (const Location& l){
+		return this->x == l.x && this->y == l.y;
 	}
 };
 

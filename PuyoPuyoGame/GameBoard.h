@@ -28,6 +28,7 @@ private:
 	int CalculatePoints(Location l, char value);
 	int TrackAdjacents(Location l, char value);
 	vector<Location> AdjacentSimilar(Location l, char value, vector<Location> checked);
+	void DeleteLocation(Location l);
 
 	Matrix<char>* board;
 	
