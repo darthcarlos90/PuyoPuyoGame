@@ -22,7 +22,7 @@ void Gameboard::SetValue(Location l, char value){
 	board->set_element(l.x, l.y, value);
 }
 
-void Gameboard::SetMoving(char value, Location l, Location old_l){
+void Gameboard::MovePiece(char value, Location l, Location old_l){
 	if (old_l.x != -1){ // if there is an old_x
 		SetValue(old_l, ' '); // set empty
 	}
@@ -47,13 +47,18 @@ bool Gameboard::isOccuppied(Location l){
 bool Gameboard::canMove(Location from, int direction){
 	switch (direction){
 	case DOWN:
-		return isOccuppied(Location(from.x + 1, from.y));
+		return !isOccuppied(Location(from.x + 1, from.y));
 		break;
 	case LEFT:
-		return isOccuppied(Location(from.x, from.y - 1));
+		return !isOccuppied(Location(from.x, from.y - 1));
 		break;
 	case RIGHT:
-		return isOccuppied(Location(from.x, from.y + 1));
+		return !isOccuppied(Location(from.x, from.y + 1));
 		break;
 	}
+}
+
+void Gameboard::MovePair(Pair p){
+	MovePiece(p.getP1().value, p.getP1().location, p.getP1().old_location);
+	MovePiece(p.getPivot().value, p.getPivot().location, p.getPivot().old_location);
 }

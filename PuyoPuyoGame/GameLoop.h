@@ -7,7 +7,9 @@
 #pragma once
 #include "Matrix.h"
 #include "GameBoard.h"
-#include "Pair.h"
+#include <stdlib.h>
+#include <string>
+#include <Windows.h>
 
 
 class GameLoop{
@@ -24,6 +26,7 @@ public:
 
 private:
 	void PrintElements();
+	void DeletePair();
 
 
 	unsigned int score;

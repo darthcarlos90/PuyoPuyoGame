@@ -4,6 +4,7 @@
 
 #include "Matrix.h"
 #include "Utils.h"
+#include "Pair.h"
 #include <vector>
 
 class Gameboard{
@@ -13,12 +14,13 @@ public:
 
 	void PrintBoard();
 	void SetValue(Location l, char value); 
-	void SetMoving(char value, Location l, Location old_l = Location()); // Old location is an optional parameter
+	void MovePair(Pair p);
 	bool isOccuppied(Location l);
 	bool canMove(Location from, int direction);
 
 
 private:
+	void MovePiece(char value, Location l, Location old_l = Location()); // Old location is an optional parameter
 	Matrix<char>* board;
 	
 	
