@@ -28,11 +28,12 @@ void GameLoop::DeletePair(){
 // prints on screen the elements of the game (score and the board basically)
 void GameLoop::PrintElements(){
 	
-	//cout << "Score: " << score << endl;
+	
 	// For debugging purposes
 	//cout << "Frames: " << frames << endl;
 	//cout << "Frames per second: " << frames_p_sec << endl;
-	gameboard.PrintBoard();
+	gameboard.PrintBoard(score);
+	
 	// TODO: SCORE HERE NOT IN OTHER LOOP
 }
 
@@ -154,7 +155,6 @@ void GameLoop::UpdateGame(float msec){
 
 		frames++;
 		frames_p_sec = 1.0f / (msec / 1000.0f);
-		PrintElements();
 		game_timer = 0.0f; // reset timer
 	}
 }

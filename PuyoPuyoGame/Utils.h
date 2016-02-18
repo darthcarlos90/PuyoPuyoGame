@@ -52,15 +52,6 @@ struct Location{
 	bool operator == (const Location& l){
 		return this->x == l.x && this->y == l.y;
 	}
-
-	// Now that I need modifiers for this struct
-	void setX(int newX){
-		this->x = newX;
-	}
-
-	void setY(int newY){
-		this->y = newY;
-	}
 };
 
 struct Piece {
@@ -76,14 +67,6 @@ struct Piece {
 		location.y = 0;
 		old_location.x = -1;
 		old_location.y = -1;
-	}
-
-	void setNewOldLocation(Location newLocation){
-		this->old_location = newLocation;
-	}
-
-	void setNewLocation(Location newLocation){
-		this->location = newLocation;
 	}
 
 	Location location;

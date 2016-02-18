@@ -147,3 +147,19 @@ Piece Pair::getRightMost(bool* both){
 		return p1;
 	}
 }
+
+void Pair::ChangeP1OldLocation(Location newLoc){
+	p1.old_location = newLoc;
+}
+
+void Pair::ChangeP1Location(Location newLoc){
+	p1.location = newLoc;
+}
+
+void Pair::ChangePivotOldLocation(Location newLoc){
+	p2.old_location = newLoc;
+}
+
+void Pair::ChangePivotLocation(Location newLoc){
+	p2.location = newLoc;
+}

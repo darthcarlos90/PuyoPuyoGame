@@ -13,7 +13,7 @@ public:
 	Gameboard();// creates empty gameboard
 	~Gameboard(); // Destructs the gameboard
 
-	void PrintBoard();
+	void PrintBoard(int score);
 	void SetValue(Location l, char value); 
 	void MovePair(Pair p);
 	bool isOccuppied(Location l);
