@@ -33,7 +33,7 @@ void GameLoop::PrintElements(){
 	//cout << "Frames: " << frames << endl;
 	//cout << "Frames per second: " << frames_p_sec << endl;
 	gameboard.PrintBoard();
-	score += gameboard.CheckPoints();
+	// TODO: SCORE HERE NOT IN OTHER LOOP
 }
 
 // The msec input refers to how many miliseconds have passed since the last frame
@@ -107,7 +107,6 @@ void GameLoop::UpdateGame(float msec){
 						pair->Move(DOWN);
 						gameboard.MovePair(*pair);
 					}
-
 				}
 				else {
 					if (gameboard.canMove(p.location, DOWN)){
@@ -115,8 +114,6 @@ void GameLoop::UpdateGame(float msec){
 						gameboard.MovePair(*pair);
 					}
 				}
-
-
 			}
 
 			//Now see if you can move further down
@@ -132,6 +129,7 @@ void GameLoop::UpdateGame(float msec){
 					gameboard.SetStaticPair(*pair);
 					DeletePair(); // delete the pair to create a new one
 					falling = false;
+					score += gameboard.CheckPoints();
 
 				}
 			}
@@ -143,10 +141,10 @@ void GameLoop::UpdateGame(float msec){
 				}
 				else {
 					//If not, make the pair static
-					gameboard.SetValue(pair->getP1().location, pair->getP1().value);
-					gameboard.SetValue(pair->getPivot().location, pair->getPivot().value);
+					gameboard.SetStaticPair(*pair);
 					DeletePair(); // delete the pair to create a new one
 					falling = false;
+					score += gameboard.CheckPoints();
 
 				}
 			}

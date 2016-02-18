@@ -219,6 +219,7 @@ void Gameboard::DeleteLocation(Location l){
 	}
 	if (index == -1)
 		cout << "Holis" << endl;
+	
 	static_pieces.erase(static_pieces.begin() + index);
 }
 

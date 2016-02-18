@@ -55,7 +55,7 @@ void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 		}
 		break;
 	case P_UP:
-		if (p1.location.x < p2.location.x && p1.location.y > 0){
+		if (p1.location.y > 0){
 			// If p1 is above p2 and can be shifted
 			p1.old_location = p1.location;
 			p1.location.x++;
