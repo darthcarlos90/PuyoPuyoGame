@@ -3,11 +3,9 @@
 #include <iostream>
 #include "GameLogic.h"
 
-
 using namespace std;
 
 int main(){
-	
 	Gamelogic logic;
 	logic.Start();
 

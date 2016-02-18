@@ -1,4 +1,5 @@
 #include "GameLogic.h"
+#include "Window.h"
 
 /*
 	Let's have a simple structure for the game, show menu, start game depending on the menu output.
@@ -15,11 +16,12 @@ void Gamelogic::Start(){
 	if (menu.GameStarted()){
 		// Lets start the game logic
 		GameTimer timer;
-		loop.Start();
+		Window w;
+		loop.Start(w.getWritter());
 		while (!loop.getPlayerLost()){
 			float msec = timer.GetTimedMS();
 			loop.UpdateGame(msec);
-			loop.PrintElements(); // Separate game logic from "rendering" if it can be called that way
+			loop.PrintElements(w.getWritter()); // Separate game logic from "rendering" if it can be called that way
 		}
 	}
 

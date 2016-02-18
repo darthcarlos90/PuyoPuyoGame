@@ -7,13 +7,14 @@
 #include "Pair.h"
 #include <vector>
 #include <algorithm>
+#include <Windows.h>
 
 class Gameboard{
 public:
 	Gameboard();// creates empty gameboard
 	~Gameboard(); // Destructs the gameboard
 
-	void PrintBoard(int score);
+	void PrintBoard(int score, HANDLE writter);
 	void SetValue(Location l, char value); 
 	void MovePair(Pair p);
 	bool isOccuppied(Location l);

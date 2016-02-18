@@ -17,13 +17,13 @@ public:
 	GameLoop(void);
 	~GameLoop(void);
 
-	void Start(void); 
+	void Start(HANDLE writter); 
 	// Temporary fix
 	void UpdateGame(float msec = 0.0f); // Game update method
 
 	// as coding goes on try adding more and more methods
 	bool getPlayerLost() { return player_lost; }
-	void PrintElements();
+	void PrintElements(HANDLE writter);
 
 private:
 	

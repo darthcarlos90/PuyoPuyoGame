@@ -16,8 +16,8 @@ GameLoop::~GameLoop(void){
 	DeletePair();
 }
 
-void GameLoop::Start(void){
-	PrintElements();
+void GameLoop::Start(HANDLE writter){
+	PrintElements(writter);
 }
 
 void GameLoop::DeletePair(){
@@ -26,13 +26,13 @@ void GameLoop::DeletePair(){
 }
 
 // prints on screen the elements of the game (score and the board basically)
-void GameLoop::PrintElements(){
+void GameLoop::PrintElements(HANDLE writter){
 	
 	
 	// For debugging purposes
 	//cout << "Frames: " << frames << endl;
 	//cout << "Frames per second: " << frames_p_sec << endl;
-	gameboard.PrintBoard(score);
+	gameboard.PrintBoard(score, writter);
 	
 	// TODO: SCORE HERE NOT IN OTHER LOOP
 }

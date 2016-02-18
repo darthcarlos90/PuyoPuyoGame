@@ -16,13 +16,57 @@ Gameboard::~Gameboard(){
 	delete board;
 }
 
-void Gameboard::PrintBoard(int score){
+void Gameboard::PrintBoard(int score, HANDLE writter){
 
 	if (changes){
 		system("cls");
-		cout << *board << endl;
+		//cout << *board << endl;
+		//Create a "back buffer" and put the info there
+		CHAR_INFO backBuffer[80 * 50];
+
+		//Move the matrix info into the back buffer
+		for (unsigned int i = 0; i < board->get_x_size(); i++){
+			for (unsigned int j = 0; j < board->get_y_size(); j++){
+				char element = board->get_element(i, j);
+				CHAR_INFO character;
+				
+				switch (element){
+				case '1':
+					character.Char.AsciiChar = 0x04;
+					character.Attributes = FOREGROUND_RED | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '2':
+					character.Char.AsciiChar = 0x1E;
+					character.Attributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '3':
+					character.Char.AsciiChar = 0x0E;
+					character.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '4':
+					character.Char.AsciiChar = 0x01;
+					character.Attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case ' ':
+					character.Char.AsciiChar = element;
+					character.Attributes =  BACKGROUND_BLUE |BACKGROUND_GREEN |BACKGROUND_RED | BACKGROUND_INTENSITY;
+					break;
+				}
+
+				backBuffer[j + 80 * i] = character;
+
+				
+			}
+
+		}
+
+		COORD charBufSize = { 80, 50 };
+		COORD characterPos = { 0, 0 };
+		SMALL_RECT writeArea = { 0, 0, 79, 49 };
+
+		WriteConsoleOutputA(writter, backBuffer, charBufSize, characterPos, &writeArea);
 		changes = false;
-		cout << "Score: " << score << endl;
+		//cout << "Score: " << score << endl;
 	}
 	
 }
