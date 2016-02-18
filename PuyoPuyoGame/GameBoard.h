@@ -19,7 +19,7 @@ public:
 	bool isOccuppied(Location l);
 	bool canMove(Location from, int direction);
 	void SetStaticPair(Pair p); // Sets a pair static and adds its elements to the static pieces vector
-	int CheckPoints();
+	int CheckPoints(double difficulty);
 	void move_piece(Piece p); // Public method accepts a piece class as parameter so it can be used on shifting
 	
 
@@ -40,6 +40,8 @@ private:
 	bool changes;
 
 	vector<Piece> static_pieces;
+
+	double difficulty;
 	
 	
 

@@ -27,7 +27,7 @@ void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 	// p2 is the pivot, p1 moves
 	switch (state){
 	case P_LEFT:
-		if (p1.location.x < X_SIZE){
+		if (p1.location.x < X_SIZE - 1){
 			// if p1 is at the left of p2
 			// AND it can be shifted
 			p1.old_location = p1.location;
@@ -37,7 +37,7 @@ void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 		}
 		break;
 	case P_DOWN:
-		if (p1.location.y < Y_SIZE){
+		if (p1.location.y < Y_SIZE - 1){
 			// If p1 is below p2, and it can be shifted
 			p1.old_location = p1.location;
 			p1.location.x--;

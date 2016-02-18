@@ -14,12 +14,17 @@
  enum Piece_State{
 	 P_LEFT, P_RIGHT, P_DOWN, P_UP
  };
+ 
+ 
 
  // This constants will be used through the game
 #define X_SIZE 12
 #define Y_SIZE 6
 #define X_START 0
 #define Y_START 3
+#define EASY 500.0f
+#define MEDIUM 250.0f
+#define HARD 0.0f
 
 
 

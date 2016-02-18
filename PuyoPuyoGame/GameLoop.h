@@ -43,6 +43,6 @@ private:
 	Gameboard gameboard;
 	Pair* pair; //This pair will be recycled for the upcoming pairs
 
-
+	double difficulty;
 
 };

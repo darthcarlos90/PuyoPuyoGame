@@ -92,7 +92,7 @@ void Gameboard::SetStaticPair(Pair p){
 	SetValue(p.getPivot().location, p.getPivot().value);
 }
 
-int Gameboard::CheckPoints(){
+int Gameboard::CheckPoints(double difficulty){
 	int points = 0;
 	if (static_pieces.size() >= 4){
 		for (unsigned int i = 0; i < static_pieces.size(); i++){
@@ -101,7 +101,9 @@ int Gameboard::CheckPoints(){
 			points += pointsFromPiece;
 		}
 	}
-	
+	if (difficulty == MEDIUM) points *= 2;
+	else if (difficulty == HARD) points *= 3;
+
 	return points;
 	
 }
@@ -119,7 +121,7 @@ int Gameboard::CalculatePoints(Location l, char value){
 
 		// Then, move elements down (if available)
 		for (unsigned int i = 0; i < static_pieces.size(); i++){
-			if (canMove(static_pieces[i].location, DOWN)){
+			while (canMove(static_pieces[i].location, DOWN)){
 				Location oldLoc = static_pieces[i].location;
 				Location newLoc(oldLoc.x + 1, oldLoc.y);
 				DeleteValue(oldLoc);

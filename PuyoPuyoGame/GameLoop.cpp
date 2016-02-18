@@ -7,7 +7,7 @@ GameLoop::GameLoop(void){
 	score = frames = 0;
 	frames_p_sec = game_timer =  0.0f;
 	player_lost = false;
-	
+	difficulty = EASY;
 	falling = false;
 }
 
@@ -40,7 +40,7 @@ void GameLoop::PrintElements(){
 // The msec input refers to how many miliseconds have passed since the last frame
 void GameLoop::UpdateGame(float msec){
 	game_timer += msec; // Lets add how many milliseconds have passed
-	if (game_timer > 500.0f){ // If the timer is less than X seconds, skip 
+	
 		/*
 			For this game, we will use numbers instead of colours. We will use from 1 to 4
 			to depic different "colours".
@@ -116,7 +116,8 @@ void GameLoop::UpdateGame(float msec){
 					}
 				}
 			}
-
+			if (game_timer > difficulty){ // If the timer is less than X seconds, skip 
+				game_timer = 0.0f; // reset timer
 			//Now see if you can move further down
 			Piece p = pair->getLowest(&both);
 			if (both){
@@ -130,7 +131,7 @@ void GameLoop::UpdateGame(float msec){
 					gameboard.SetStaticPair(*pair);
 					DeletePair(); // delete the pair to create a new one
 					falling = false;
-					score += gameboard.CheckPoints();
+					score += gameboard.CheckPoints(difficulty);
 
 				}
 			}
@@ -145,7 +146,10 @@ void GameLoop::UpdateGame(float msec){
 					gameboard.SetStaticPair(*pair);
 					DeletePair(); // delete the pair to create a new one
 					falling = false;
-					score += gameboard.CheckPoints();
+					score += gameboard.CheckPoints(difficulty);
+					if (score > 300 && score < 1500) difficulty = MEDIUM;
+					if (score > 1500) difficulty = HARD;
+
 
 				}
 			}
@@ -155,6 +159,6 @@ void GameLoop::UpdateGame(float msec){
 
 		frames++;
 		frames_p_sec = 1.0f / (msec / 1000.0f);
-		game_timer = 0.0f; // reset timer
+		
 	}
 }

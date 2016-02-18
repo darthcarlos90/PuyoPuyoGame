@@ -128,7 +128,7 @@ ostream& operator<< (ostream& ostr, const Matrix<E>& mtx){
 		for (int j = 0; j < mtx.y_size; j++){
 			ostr << mtx.cells[i][j];
 			if (j != mtx.y_size - 1){
-				ostr << " ";
+				//ostr << " ";
 			}
 		}
 		ostr << "\n";
