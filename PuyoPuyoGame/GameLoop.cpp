@@ -66,7 +66,7 @@ void GameLoop::UpdateGame(float msec){
 			bool both = false;
 			if (GetAsyncKeyState(0x53)){
 				pair->Shift();
-				gameboard.MovePair(*pair);
+				gameboard.move_piece(pair->getP1()); // Only move p1, since is the one that shifts
 			}
 			else if (GetAsyncKeyState(VK_LEFT)){ // If left was pressed
 				Piece p = pair->getLeftMost(&both);

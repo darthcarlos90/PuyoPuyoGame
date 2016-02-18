@@ -20,11 +20,15 @@ public:
 	bool canMove(Location from, int direction);
 	void SetStaticPair(Pair p); // Sets a pair static and adds its elements to the static pieces vector
 	int CheckPoints();
+	void move_piece(Piece p); // Public method accepts a piece class as parameter so it can be used on shifting
+	
 
 
 private:
 	// Private helper methods
-	void MovePiece(char value, Location l, Location old_l = Location()); // Old location is an optional parameter
+	// Private method for internal use
+	void MovePiece(char value, Location l); // Old location is an optional parameter
+	void DeleteValue(Location old_l); // So the spaces are first errased, then re printed in separate processes
 	int CalculatePoints(Location l, char value);
 	int TrackAdjacents(Location l, char value);
 	vector<Location> AdjacentSimilar(Location l, char value, vector<Location> checked);

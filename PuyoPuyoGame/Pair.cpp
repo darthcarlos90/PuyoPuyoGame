@@ -59,8 +59,8 @@ void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 			// If p1 is above p2 and can be shifted
 			p1.old_location = p1.location;
 			p1.location.x++;
-			p2.location.y--;
-			state = P_RIGHT;
+			p1.location.y--;
+			state = P_LEFT;
 		}
 		break;
 	}

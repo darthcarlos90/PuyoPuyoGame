@@ -31,11 +31,7 @@ void Gameboard::SetValue(Location l, char value){
 	changes = true;
 }
 
-void Gameboard::MovePiece(char value, Location l, Location old_l){
-	if (old_l.x != -1){ // if there is an old_x
-		SetValue(old_l, ' '); // set empty
-	}
-
+void Gameboard::MovePiece(char value, Location l){
 	SetValue(l, value); // Re-use ;)
 }
 
@@ -69,8 +65,10 @@ bool Gameboard::canMove(Location from, int direction){
 }
 
 void Gameboard::MovePair(Pair p){
-	MovePiece(p.getP1().value, p.getP1().location, p.getP1().old_location);
-	MovePiece(p.getPivot().value, p.getPivot().location, p.getPivot().old_location);
+	DeleteValue(p.getP1().old_location);
+	DeleteValue(p.getPivot().old_location);
+	MovePiece(p.getP1().value, p.getP1().location);
+	MovePiece(p.getPivot().value, p.getPivot().location);
 }
 
 void Gameboard::SetStaticPair(Pair p){
@@ -110,7 +108,8 @@ int Gameboard::CalculatePoints(Location l, char value){
 			if (canMove(static_pieces[i].location, DOWN)){
 				Location oldLoc = static_pieces[i].location;
 				Location newLoc(oldLoc.x + 1, oldLoc.y);
-				MovePiece(static_pieces[i].value, newLoc, oldLoc);
+				DeleteValue(oldLoc);
+				MovePiece(static_pieces[i].value, newLoc);
 				static_pieces[i].location = newLoc;
 				static_pieces[i].old_location = oldLoc;
 			}
@@ -221,4 +220,14 @@ void Gameboard::DeleteLocation(Location l){
 	if (index == -1)
 		cout << "Holis" << endl;
 	static_pieces.erase(static_pieces.begin() + index);
+}
+
+void Gameboard::move_piece(Piece p){
+	DeleteValue(p.old_location);
+	MovePiece(p.value, p.location);
+}
+
+void Gameboard::DeleteValue(Location old_l){
+	if (old_l.x != -1)
+		board->set_element(old_l.x, old_l.y, ' ');
 }
