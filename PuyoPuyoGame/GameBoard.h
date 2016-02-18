@@ -27,7 +27,7 @@ public:
 private:
 	// Private helper methods
 	// Private method for internal use
-	void MovePiece(char value, Location l); // Old location is an optional parameter
+	void MovePiece(char value, Location newLocation); 
 	void DeleteValue(Location old_l); // So the spaces are first errased, then re printed in separate processes
 	int CalculatePoints(Location l, char value);
 	int TrackAdjacents(Location l, char value);

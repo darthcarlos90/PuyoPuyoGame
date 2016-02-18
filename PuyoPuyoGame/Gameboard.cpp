@@ -31,8 +31,8 @@ void Gameboard::SetValue(Location l, char value){
 	changes = true;
 }
 
-void Gameboard::MovePiece(char value, Location l){
-	SetValue(l, value); // Re-use ;)
+void Gameboard::MovePiece(char value, Location newLocation){
+	SetValue(newLocation, value); // Re-use ;)
 }
 
 bool Gameboard::isOccuppied(Location l){
@@ -72,8 +72,21 @@ void Gameboard::MovePair(Pair p){
 }
 
 void Gameboard::SetStaticPair(Pair p){
+	// Before setting a static pair, see if it can move further down
+	while (canMove(p.getP1().location, DOWN)){
+		p.getP1().setNewOldLocation(p.getP1().location);
+		p.getP1().setNewLocation(Location(p.getP1().location.x + 1, p.getP1().location.y));
+		DeleteValue(p.getP1().old_location);
+	}
+
+	while (canMove(p.getPivot().location, DOWN)){
+		p.getPivot().setNewOldLocation(p.getPivot().location);
+		p.getPivot().setNewLocation(Location(p.getPivot().location.x + 1, p.getPivot().location.y));
+		DeleteValue(p.getPivot().old_location);
+	}
 	static_pieces.push_back(p.getP1());
 	static_pieces.push_back(p.getPivot());
+	
 	SetValue(p.getP1().location, p.getP1().value);
 	SetValue(p.getPivot().location, p.getPivot().value);
 }
