@@ -20,7 +20,7 @@ void Gamelogic::Start(){
 		loop.Start(w.getWritter());
 		while (!loop.getPlayerLost()){
 			float msec = timer.GetTimedMS();
-			loop.UpdateGame(msec);
+			loop.UpdateGame(w.getReader(), msec);
 			loop.PrintElements(w.getWritter()); // Separate game logic from "rendering" if it can be called that way
 		}
 	}

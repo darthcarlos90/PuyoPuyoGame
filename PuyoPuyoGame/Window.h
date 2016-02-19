@@ -7,19 +7,19 @@
 #pragma once
 #include <string>
 #include <Windows.h>
+#include "Utils.h"
+
+
 
 class Window{
 public:
-	Window( int x_size = 80, int y_size = 50);
+	Window();
 	~Window();
 
 	HANDLE getWritter() { return wHnd; }
 	HANDLE getReader() { return rHnd; }
 
 private:
-	// The sizes of the screen
-	int x_size;
-	int y_size;
 
 	// The window handlers
 	HANDLE wHnd;

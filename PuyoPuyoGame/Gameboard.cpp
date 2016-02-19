@@ -19,16 +19,15 @@ Gameboard::~Gameboard(){
 void Gameboard::PrintBoard(int score, HANDLE writter){
 
 	if (changes){
-		system("cls");
 		//cout << *board << endl;
 		//Create a "back buffer" and first "render" it there
-		CHAR_INFO backBuffer[80 * 50];
+		CHAR_INFO backBuffer[WINDOW_X * WINDOW_Y];
 
 		// "Clear" the buffer with green colour
 		CHAR_INFO clearing;
 		clearing.Char.AsciiChar = ' ';
 		clearing.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-		for (unsigned int i = 0; i < (80 * 50); i++){
+		for (unsigned int i = 0; i < (WINDOW_X * WINDOW_Y); i++){
 			backBuffer[i] = clearing;
 		}
 
@@ -63,19 +62,26 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 					break;
 				}
 
-				backBuffer[(j + 34) + 80 * (i + 22)] = character;
+				int borderx = (WINDOW_X / 2) - (X_SIZE / 2);
+				int bordery = (WINDOW_Y / 2) - (Y_SIZE / 2);
+
+				backBuffer[(j + borderx) + WINDOW_X * (i + bordery)] = character;
 
 			}
-
-
 		}
 
-		COORD charBufSize = { 80, 50 };
+		COORD charBufSize = { WINDOW_X, WINDOW_Y };
 		COORD characterPos = { 0, 0 };
-		SMALL_RECT writeArea = { 0, 0, 79, 49 };
-
-		WriteConsoleOutputA(writter, backBuffer, charBufSize, characterPos, &writeArea);
+		SMALL_RECT writeArea = { 0, 0, WINDOW_X - 1, WINDOW_Y - 1};
+ 
+		// "Bring" the "back buffer" to the "front"
+		WriteConsoleOutputA(writter, backBuffer, charBufSize, characterPos, &writeArea); 
+		
 		changes = false;
+
+
+
+
 		//cout << "Score: " << score << endl;
 	}
 	

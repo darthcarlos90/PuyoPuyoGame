@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <Windows.h>
 
+
+
 class Gameboard{
 public:
 	Gameboard();// creates empty gameboard

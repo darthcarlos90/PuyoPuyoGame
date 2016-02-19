@@ -18,13 +18,19 @@
  
 
  // This constants will be used through the game
+ // Sizes of the matrix of data
 #define X_SIZE 12
 #define Y_SIZE 6
+
 #define X_START 0
 #define Y_START 3
 #define EASY 500.0f
 #define MEDIUM 250.0f
-#define HARD 0.0f
+#define HARD 125.0f
+
+ // Sizes of window and buffer of console
+#define WINDOW_X 40
+#define WINDOW_Y 21
 
 
 

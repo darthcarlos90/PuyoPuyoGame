@@ -19,7 +19,7 @@ public:
 
 	void Start(HANDLE writter); 
 	// Temporary fix
-	void UpdateGame(float msec = 0.0f); // Game update method
+	void UpdateGame(HANDLE reader, float msec = 0.0f); // Game update method
 
 	// as coding goes on try adding more and more methods
 	bool getPlayerLost() { return player_lost; }
@@ -44,5 +44,7 @@ private:
 	Pair* pair; //This pair will be recycled for the upcoming pairs
 
 	double difficulty;
+	// Counters to sanitize the inputs
+	int shift, right, left, down;
 
 };
