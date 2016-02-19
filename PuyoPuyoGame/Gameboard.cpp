@@ -40,43 +40,56 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 			backBuffer[x + 80 * 49] = border;
 		}
 
-		
+		int x = 1, y = 1;
+		int limitx = 13, limity = 4;
 
 		////Move the matrix info into the back buffer
-		//for (unsigned int i = 0; i < board->get_x_size(); i++){
-		//	for (unsigned int j = 0; j < board->get_y_size(); j++){
-		//		char element = board->get_element(i, j);
-		//		CHAR_INFO character;
-		//		
-		//		switch (element){
-		//		case '1':
-		//			character.Char.AsciiChar = 0x04;
-		//			character.Attributes = FOREGROUND_RED | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
-		//			break;
-		//		case '2':
-		//			character.Char.AsciiChar = 0x1E;
-		//			character.Attributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
-		//			break;
-		//		case '3':
-		//			character.Char.AsciiChar = 0x0E;
-		//			character.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
-		//			break;
-		//		case '4':
-		//			character.Char.AsciiChar = 0x01;
-		//			character.Attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
-		//			break;
-		//		case ' ':
-		//			character.Char.AsciiChar = element;
-		//			character.Attributes =  BACKGROUND_BLUE |BACKGROUND_GREEN |BACKGROUND_RED | BACKGROUND_INTENSITY;
-		//			break;
-		//		}
+		for (unsigned int i = 0; i < board->get_x_size(); i++){
+			for (unsigned int j = 0; j < board->get_y_size(); j++){
+				
+				char element = board->get_element(i, j);
+				CHAR_INFO character;
+				
+				switch (element){
+				case '1':
+					character.Char.AsciiChar = 0x04;
+					character.Attributes = FOREGROUND_RED | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '2':
+					character.Char.AsciiChar = 0x1E;
+					character.Attributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '3':
+					character.Char.AsciiChar = 0x0E;
+					character.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case '4':
+					character.Char.AsciiChar = 0x01;
+					character.Attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_INTENSITY;
+					break;
+				case ' ':
+					character.Char.AsciiChar = element;
+					character.Attributes =  BACKGROUND_BLUE |BACKGROUND_GREEN |BACKGROUND_RED | BACKGROUND_INTENSITY;
+					break;
+				}
+				
+				int oldY = y;
+				for (; x <= limitx; x++){
+					for (; y <= limity; y++){
+						backBuffer[x + 80 * y] = character;
+					}
+					y = oldY;
+				}
 
-		//		backBuffer[j + 80 * i] = character;
+				limitx += 13;
+				limity += 4;
 
-		//		
-		//	}
+				//backBuffer[j + 80 * i] = character;
 
-		//}
+				
+			}
+
+		}
 
 		COORD charBufSize = { 80, 50 };
 		COORD characterPos = { 0, 0 };
