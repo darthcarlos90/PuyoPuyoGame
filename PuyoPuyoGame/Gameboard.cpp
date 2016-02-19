@@ -24,24 +24,14 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 		//Create a "back buffer" and first "render" it there
 		CHAR_INFO backBuffer[80 * 50];
 
-		// First, we are going to paint the borders green
-		// First the horizontal lines
-		CHAR_INFO border;
-		border.Char.AsciiChar = ' ';
-		border.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
-		for (int y = 0; y < 50; y++){
-			backBuffer[80 * y] = border;
-			backBuffer[79 + 80 * y] = border;
+		// "Clear" the buffer with green colour
+		CHAR_INFO clearing;
+		clearing.Char.AsciiChar = ' ';
+		clearing.Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY | BACKGROUND_GREEN | BACKGROUND_INTENSITY;
+		for (unsigned int i = 0; i < (80 * 50); i++){
+			backBuffer[i] = clearing;
 		}
 
-		// Now the vertical lines
-		for (int x = 0; x < 80; x++){
-			backBuffer[x + 80 * 0] = border;
-			backBuffer[x + 80 * 49] = border;
-		}
-
-		int x = 1, y = 1;
-		int limitx = 13, limity = 4;
 
 		////Move the matrix info into the back buffer
 		for (unsigned int i = 0; i < board->get_x_size(); i++){
@@ -72,22 +62,11 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 					character.Attributes =  BACKGROUND_BLUE |BACKGROUND_GREEN |BACKGROUND_RED | BACKGROUND_INTENSITY;
 					break;
 				}
-				
-				int oldY = y;
-				for (; x <= limitx; x++){
-					for (; y <= limity; y++){
-						backBuffer[x + 80 * y] = character;
-					}
-					y = oldY;
-				}
 
-				limitx += 13;
-				limity += 4;
+				backBuffer[(j + 34) + 80 * (i + 22)] = character;
 
-				//backBuffer[j + 80 * i] = character;
-
-				
 			}
+
 
 		}
 
