@@ -21,7 +21,7 @@ GameLoop::~GameLoop(void){
 }
 
 void GameLoop::Start(HANDLE writter){
-	PrintElements(writter);
+	 PrintElements(writter);
 }
 
 void GameLoop::DeletePair(){
@@ -32,13 +32,13 @@ void GameLoop::DeletePair(){
 // prints on screen the elements of the game (score and the board basically)
 void GameLoop::PrintElements(HANDLE writter){
 	
-	
-	// For debugging purposes
-	//cout << "Frames: " << frames << endl;
-	//cout << "Frames per second: " << frames_p_sec << endl;
-	gameboard.PrintBoard(score, writter);
-	
-	// TODO: SCORE HERE NOT IN OTHER LOOP
+	if(!player_lost) gameboard.PrintBoard(score, writter);
+	else {
+		system("cls");
+		cout << "You lost :(" << endl;
+		cout << "Score: " << score << endl;
+	}
+
 }
 
 // The msec input refers to how many miliseconds have passed since the last frame
@@ -179,7 +179,8 @@ void GameLoop::UpdateGame(HANDLE reader, float msec){
 						falling = false;
 						score += gameboard.CheckPoints(difficulty);
 						if (score > 200 && score < 400) difficulty = MEDIUM;
-						if (score > 800) difficulty = HARD;
+						if (score > 800 && score < 900) difficulty = HARD;
+						if (score > 900) difficulty = INSANE;
 					}
 				}
 			}

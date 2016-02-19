@@ -79,9 +79,6 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 		
 		changes = false;
 
-
-
-
 		//cout << "Score: " << score << endl;
 	}
 	

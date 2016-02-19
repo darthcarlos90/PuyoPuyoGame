@@ -27,9 +27,10 @@
 #define EASY 500.0f
 #define MEDIUM 250.0f
 #define HARD 125.0f
+#define INSANE 0.0f
 
  // Sizes of window and buffer of console
-#define WINDOW_X 40
+#define WINDOW_X 35
 #define WINDOW_Y 21
 
 
