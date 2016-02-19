@@ -10,7 +10,7 @@
 
 class Window{
 public:
-	Window( int x_size = 70, int y_size = 49);
+	Window( int x_size = 80, int y_size = 50);
 	~Window();
 
 	HANDLE getWritter() { return wHnd; }
