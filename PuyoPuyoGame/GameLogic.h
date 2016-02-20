@@ -10,12 +10,12 @@
 class Gamelogic {
 public:
 	Gamelogic(void); // Constructor
-	~Gamelogic(void); // destructo
+	~Gamelogic(void); // destructor
 
-	void Start(); // Method to start the game
+	void Start(); //Starts the game
 
 private:
-	Menu menu;
-	GameLoop loop;
+	Menu menu; // A class to show a menu
+	GameLoop loop; // Where the game loop resides
 
 };

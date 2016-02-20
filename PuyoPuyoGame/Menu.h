@@ -17,6 +17,6 @@ public:
 	bool GameStarted(void) { return start_game; }; // has the user started the game?
 
 private:
-	bool start_game;
+	bool start_game; // A boolean to see if the user chose to start the game
 	
 };

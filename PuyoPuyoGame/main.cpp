@@ -6,6 +6,7 @@
 using namespace std;
 
 int main(){
+	// Create a game logic class and start it
 	Gamelogic logic;
 	logic.Start();
 

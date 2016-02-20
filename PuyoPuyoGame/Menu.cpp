@@ -1,11 +1,11 @@
 #include "Menu.h"
 
 Menu::Menu(void){
-	start_game = false;
+	start_game = false; // set the value to false
 }
 
 Menu::~Menu(void){
-
+	// destructor
 }
 /*
 	Show the menu and start the game
