@@ -18,17 +18,25 @@ Window::Window()
 	// Set the window size
 	SetConsoleWindowInfo(wHnd, TRUE, &windowSize);
 
-	
-
-
-
-	CONSOLE_FONT_INFOEX fontInfo = { sizeof (CONSOLE_FONT_INFOEX) };
-	bool value = GetCurrentConsoleFontEx(wHnd, 0, &fontInfo);
-	fontInfo.dwFontSize.X = 12;
-	fontInfo.dwFontSize.Y = 16;
-	bool value2 =  SetCurrentConsoleFontEx(wHnd, 0, &fontInfo);
-
+	MakeFontBig();
 
 }
 
 Window::~Window(){}
+
+void Window::changeFont(int x, int y){
+	CONSOLE_FONT_INFOEX fontInfo = { sizeof (CONSOLE_FONT_INFOEX) };
+	bool value = GetCurrentConsoleFontEx(wHnd, 0, &fontInfo);
+	fontInfo.dwFontSize.X = x;
+	fontInfo.dwFontSize.Y = y;
+	bool value2 = SetCurrentConsoleFontEx(wHnd, 0, &fontInfo);
+}
+
+
+void Window::MakeFontBig(){
+	changeFont(12, 16);
+}
+
+void Window::MakeFontSmall(){
+	changeFont(8, 12);
+}
