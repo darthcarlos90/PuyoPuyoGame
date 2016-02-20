@@ -1,4 +1,5 @@
 #include "GameLoop.h"
+#include <time.h>
 
 
 
@@ -47,6 +48,7 @@ void GameLoop::UpdateGame(HANDLE reader, float msec){
 	DWORD numEvents = 0;
 	DWORD numEventsRead = 0;
 	GetNumberOfConsoleInputEvents(reader, &numEvents);
+	srand(time(NULL));
 	
 		/*
 			For this game, we will use numbers instead of colours. We will use from 1 to 4
