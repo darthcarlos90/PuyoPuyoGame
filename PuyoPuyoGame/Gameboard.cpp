@@ -1,6 +1,6 @@
 #include "GameBoard.h"
 
-Gameboard::Gameboard(){
+Gameboard::Gameboard(){ // Constructor
 	board = new Matrix<char>(X_SIZE, Y_SIZE);
 	// creates an empty gameboard
 	for (unsigned int i = 0; i < X_SIZE; i++){

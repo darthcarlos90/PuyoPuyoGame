@@ -176,7 +176,7 @@ void GameLoop::UpdateGame(HANDLE reader, float msec){
 */
 void GameLoop::MovePairHelper(int direction, bool both, Location location){
 	if (both){ // If both are at the same level
-		// TODO: Left here
+		// If both are at the same level, check if they are both able to move in that direction
 		if (gameboard.canMove(pair->getP1().location, direction) && gameboard.canMove(pair->getPivot().location, direction)){
 			pair->Move(direction);
 			gameboard.MovePair(*pair);
@@ -184,6 +184,7 @@ void GameLoop::MovePairHelper(int direction, bool both, Location location){
 
 	}
 	else {
+		// Otherwise get the element that is on the side where we are moving, and move in that direction
 		if (gameboard.canMove(location, direction)){
 			pair->Move(direction);
 			gameboard.MovePair(*pair);
@@ -191,11 +192,16 @@ void GameLoop::MovePairHelper(int direction, bool both, Location location){
 	}
 }
 
+/*
+	Helper method for when a piece must stop moving and stay static
+*/
 void GameLoop::MakeStaticPairHelper(){
-	gameboard.SetStaticPair(*pair);
+	gameboard.SetStaticPair(*pair); // Set the piece static
 	DeletePair(); // delete the pair to create a new one
-	falling = false;
-	score += gameboard.CheckPoints(difficulty);
+	falling = false; // The piece stopped falling
+	score += gameboard.CheckPoints(difficulty); // Calculate points if any
+
+	// Modify the difficulty
 	if (score > 200 && score < 400) difficulty = MEDIUM;
 	if (score > 800 && score < 900) difficulty = HARD;
 	if (score > 900) difficulty = INSANE;
