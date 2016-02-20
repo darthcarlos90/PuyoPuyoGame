@@ -16,10 +16,15 @@ Gameboard::~Gameboard(){
 	delete board;
 }
 
+/*
+	"Renders" the board on the console. 
+	The inputs are the score (so it can print it at some point) and the
+	writter to the console.
+*/
 void Gameboard::PrintBoard(int score, HANDLE writter){
-
+	// If there was any change on the matrix
 	if (changes){
-		//cout << *board << endl;
+		
 		//Create a "back buffer" and first "render" it there
 		CHAR_INFO backBuffer[WINDOW_X * WINDOW_Y];
 
@@ -32,13 +37,13 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 		}
 
 
-		////Move the matrix info into the back buffer
+		////Move the matrix info into the "back buffer"
 		for (unsigned int i = 0; i < board->get_x_size(); i++){
 			for (unsigned int j = 0; j < board->get_y_size(); j++){
 				
 				char element = board->get_element(i, j);
 				CHAR_INFO character;
-				
+				// Each internall character represents a different figure to show
 				switch (element){
 				case '1':
 					character.Char.AsciiChar = 0x04;
@@ -62,14 +67,18 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 					break;
 				}
 
+				// borderx and border y represent in what specific location of the console 
+				// we are printing the board
 				int borderx = (WINDOW_X / 2) - (X_SIZE / 2);
 				int bordery = (WINDOW_Y / 2) - (Y_SIZE / 2);
 
+				// "render" to the back buffer
 				backBuffer[(j + borderx) + WINDOW_X * (i + bordery)] = character;
 
 			}
 		}
 
+		// We are not setting the character buffer size and window size of the area we are rendering
 		COORD charBufSize = { WINDOW_X, WINDOW_Y };
 		COORD characterPos = { 0, 0 };
 		SMALL_RECT writeArea = { 0, 0, WINDOW_X - 1, WINDOW_Y - 1};
@@ -77,24 +86,25 @@ void Gameboard::PrintBoard(int score, HANDLE writter){
 		// "Bring" the "back buffer" to the "front"
 		WriteConsoleOutputA(writter, backBuffer, charBufSize, characterPos, &writeArea); 
 		
-		changes = false;
-
-		//cout << "Score: " << score << endl;
+		changes = false; // reset the changes flag
 	}
 	
 }
 
+// Pretty much self explanatory
 void Gameboard::SetValue(Location l, char value){
 	board->set_element(l.x, l.y, value);
 	changes = true;
 }
 
+// The same as above
 void Gameboard::MovePiece(char value, Location newLocation){
 	SetValue(newLocation, value); // Re-use ;)
 }
 
+// Checks if a location is occupied
 bool Gameboard::isOccuppied(Location l){
-	// So it cant go out of the borders
+	// So it can't go out of the borders
 	if (l.x >= board->get_x_size()) return true;
 	else if (l.y >= board->get_y_size()) return true;
 	else if (l.y < 0) return true;
@@ -107,7 +117,7 @@ bool Gameboard::isOccuppied(Location l){
 	else return true;
 }
 
-
+// Depending on where do you want to move, checks wether that spot is occupied
 bool Gameboard::canMove(Location from, int direction){
 	switch (direction){
 	case DOWN:
@@ -122,13 +132,19 @@ bool Gameboard::canMove(Location from, int direction){
 	}
 }
 
+// Moves the pair into the location stated on the struct (see utils.h)
+// This method assumes that the old location is where the pair currently is, and location is where the pair should move
 void Gameboard::MovePair(Pair p){
+	// First, delete them from their old location
 	DeleteValue(p.getP1().old_location);
 	DeleteValue(p.getPivot().old_location);
+
+	// Now print them on the new location
 	MovePiece(p.getP1().value, p.getP1().location);
 	MovePiece(p.getPivot().value, p.getPivot().location);
 }
 
+// Stops a pair from moving
 void Gameboard::SetStaticPair(Pair p){
 	// Before setting a static pair, see if it can move further down
 	while (canMove(p.getP1().location, DOWN)){
@@ -142,29 +158,41 @@ void Gameboard::SetStaticPair(Pair p){
 		p.ChangePivotLocation(Location(p.getPivot().location.x + 1, p.getPivot().location.y));
 		DeleteValue(p.getPivot().old_location);
 	}
+
+	// Add them to the static pices vector
 	static_pieces.push_back(p.getP1());
 	static_pieces.push_back(p.getPivot());
 	
+	// Set the values on the matrix
 	SetValue(p.getP1().location, p.getP1().value);
 	SetValue(p.getPivot().location, p.getPivot().value);
 }
 
+// This method calculates the points based on the difficulty
 int Gameboard::CheckPoints(double difficulty){
 	int points = 0;
+	// If there are enough pieces to start checking for color matches
 	if (static_pieces.size() >= 4){
+		// For each static piece
 		for (unsigned int i = 0; i < static_pieces.size(); i++){
+			// Calculate the possible points in case that piece is part of a series of matching pieces
+			// This proces deletes the matching pieces
 			int pointsFromPiece = CalculatePoints(static_pieces[i].location, static_pieces[i].value);
 			if (pointsFromPiece > 0) i--; // so that this step is repeated, since the element has been deleted from the list
-			points += pointsFromPiece;
+			points += pointsFromPiece; // increase points
 		}
 	}
+	// Increase the points based on the difficulty
 	if (difficulty == MEDIUM) points *= 2;
 	else if (difficulty == HARD) points *= 3;
+	else if (difficulty == INSANE) points *= 5;
 
 	return points;
-	
 }
 
+/*
+	Helper method that helps find matching values at a certain location with a certain value.
+*/
 int Gameboard::CalculatePoints(Location l, char value){
 	int points = 0;
 	// Get how many contiguous elements are with this element
@@ -193,9 +221,9 @@ int Gameboard::CalculatePoints(Location l, char value){
 }
 
 /* 
-	Checks the elements on the vector and the matrix, if there is any adjacent element,
-	the function calls itself with an increase in level.
-	If the level is 4, it starts deleting itself
+	Helper method: Gets the adjacent elements that are equal to the location l.
+	Then starts looking through the adjacent elements for more matching pieces
+	until it finishes.
 */
 int Gameboard::TrackAdjacents(Location l, char value){
 	// pass an empty vector
@@ -205,7 +233,7 @@ int Gameboard::TrackAdjacents(Location l, char value){
 		if(temp.size() > 0) adjacents.insert(adjacents.end(), temp.begin(), temp.end()); //insert at the end of the vector
 	}
 
-	// If there are more than 4 elements, destroy them from the board and remove them from the vector
+	// If there are more than 4 matching elements, destroy them from the board and remove them from the vector
 	if (adjacents.size() >= 4){
 		for (unsigned int i = 0; i < adjacents.size(); i++){
 			board->set_element(adjacents[i].x, adjacents[i].y, ' ');
@@ -290,17 +318,24 @@ void Gameboard::DeleteLocation(Location l){
 			break;
 		}
 	}
-	if (index == -1)
-		cout << "Holis" << endl;
+
+	// Uncoment for debugging
+	/*if (index == -1)
+		cout << "Error" << endl;*/
 	
 	static_pieces.erase(static_pieces.begin() + index);
 }
 
+
+/*
+	Simply move a piece from old location to new location.
+*/
 void Gameboard::move_piece(Piece p){
 	DeleteValue(p.old_location);
 	MovePiece(p.value, p.location);
 }
 
+/* Delete a value from the board*/
 void Gameboard::DeleteValue(Location old_l){
 	if (old_l.x != -1)
 		board->set_element(old_l.x, old_l.y, ' ');

@@ -1,5 +1,6 @@
 /*
-	Heads up, this classes X and Y are swapped.
+	This is a class I've been using since I learned how to 
+	create matrices in c++. There is a thing with the X and the y though , they are swapped ...
 	Which means that the X stands for ROWS,
 	and Y stands for COLUMNS
 

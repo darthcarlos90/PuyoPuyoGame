@@ -1,6 +1,8 @@
 #include "GameTimer.h"
 
+//Constructor
 GameTimer::GameTimer(void){
+	// Start the clock
 	start = clock();
 	lastTime = GetMS();
 }
@@ -14,10 +16,11 @@ float GameTimer::GetMS(){
 }
 
 
-
+/* Same than above but in seconds*/
 float GameTimer::GetSecs(){
 	return (float)(clock() - start) / CLOCKS_PER_SEC;
 }
+
 
 float GameTimer::GetTimedMS(){
 	float a = GetMS();

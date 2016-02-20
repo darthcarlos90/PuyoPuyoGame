@@ -1,5 +1,5 @@
 /*
-	This header file contains various utilities like enums, structs, constant variables, etc
+	This header file contains various utilities like enums, structs, constants, etc
 */
 
 #pragma once
@@ -22,8 +22,11 @@
 #define X_SIZE 12
 #define Y_SIZE 6
 
+ // The starting locations when a pair of pieces appear
 #define X_START 0
 #define Y_START 3
+
+ // Difficulties
 #define EASY 500.0f
 #define MEDIUM 250.0f
 #define HARD 125.0f

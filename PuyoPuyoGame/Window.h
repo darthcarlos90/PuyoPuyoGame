@@ -19,11 +19,14 @@ public:
 	HANDLE getWritter() { return wHnd; }
 	HANDLE getReader() { return rHnd; }
 
+	/* To make font smaller*/
 	void MakeFontSmall();
+
+	// To make font bigger
 	void MakeFontBig();
 
 private:
-	void changeFont(int x, int y);
+	void changeFont(int x, int y); // Helper function
 	// The window handlers
 	HANDLE wHnd;
 	HANDLE rHnd;

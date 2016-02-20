@@ -1,6 +1,7 @@
 #include "Pair.h"
 
 Pair::Pair(char val1, char val2){
+	// Set the pieces at their starting locations
 	p1.location.x = X_START;
 	p1.location.y = Y_START;
 	p1.value = val1;
@@ -9,10 +10,13 @@ Pair::Pair(char val1, char val2){
 	p2.location.y = Y_START + 1;
 	p2.value = val2;
 
-	moving = true;
-	state = P_LEFT;
+	moving = true; // Set them movings
+	state = P_LEFT; // Where is the movable piece in respect to the pivot
 }
 
+/*
+	Copy constructor
+*/
 Pair::Pair(const Pair& p){
 	this->p1 = p.p1;
 	this->p2 = p.p2;
@@ -20,7 +24,7 @@ Pair::Pair(const Pair& p){
 }
 
 Pair::~Pair(){
-	// Empty destructor for now
+	// Empty destructor
 }
 
 void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
@@ -66,7 +70,7 @@ void Pair::Shift(){ // Left piece shifts, the other one stays as pivot
 	}
 }
 
-
+// Move the pair in a given direction
 void Pair::Move(int direction){
 	switch (direction){
 	case DOWN:
@@ -97,7 +101,7 @@ void Pair::Move(int direction){
 	}
 }
 
-
+// These methods are explained at Pair.h
 Piece Pair::getLowest(bool* both){
 	if (p1.location.x == p2.location.x){
 		*both = true;
@@ -148,6 +152,7 @@ Piece Pair::getRightMost(bool* both){
 	}
 }
 
+// To change the values of the pieces
 void Pair::ChangeP1OldLocation(Location newLoc){
 	p1.old_location = newLoc;
 }

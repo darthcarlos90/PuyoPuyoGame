@@ -7,7 +7,7 @@ Window::Window()
 	wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	rHnd = GetStdHandle(STD_INPUT_HANDLE);
 
-	SetConsoleTitle(TEXT("PUYO PUYO GAME"));
+	SetConsoleTitle(TEXT("PUYO PUYO GAME")); // Set a title
 
 	COORD bufferSize = { WINDOW_X, WINDOW_Y }; // Lets change the buffer size to get rid of the extra space
 	SetConsoleScreenBufferSize(wHnd, bufferSize);
@@ -18,11 +18,11 @@ Window::Window()
 	// Set the window size
 	SetConsoleWindowInfo(wHnd, TRUE, &windowSize);
 
-	MakeFontBig();
+	MakeFontBig(); // Make font bigger
 
 }
 
-Window::~Window(){}
+Window::~Window(){} // Nothing to deconstruct
 
 void Window::changeFont(int x, int y){
 	CONSOLE_FONT_INFOEX fontInfo = { sizeof (CONSOLE_FONT_INFOEX) };
